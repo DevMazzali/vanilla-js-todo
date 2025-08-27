@@ -2,25 +2,38 @@ const inputTarefa = document.querySelector(".inputTarefa");
 const btnTarefa = document.querySelector(".btnTarefa");
 const tarefas = document.querySelector(".tarefas");
 
-document.addEventListener("click", function (e) {
+document.addEventListener("click", function deleteItem(e) {
   const el = e.target;
+
+  if (el.classList.contains("checkBox")) {
+    el.parentElement.classList.add("completed");
+
+    setTimeout(() => {
+      el.parentElement.remove();
+
+      salvarTarefas();
+    }, 500);
+  }
   if (el.classList.contains("delete")) {
     el.parentElement.remove();
+
+    inputTarefa.focus();
     salvarTarefas();
   }
 });
 
 function criaTarefa(textInput) {
   const li = document.createElement("li");
-  li.innerText = textInput;
+
+  li.textContent = textInput;
   tarefas.appendChild(li);
 
-  const button = document.createElement("button");
-  button.setAttribute("class", "delete");
-  button.innerText = "Apagar";
+  const checkingBox = document.createElement("input");
 
-  li.innerText += " ";
-  li.appendChild(button);
+  checkingBox.setAttribute("class", "checkBox");
+  checkingBox.setAttribute("type", "checkbox");
+
+  li.appendChild(checkingBox);
 
   inputTarefa.value = "";
   inputTarefa.focus();

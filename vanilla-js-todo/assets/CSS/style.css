@@ -1,8 +1,8 @@
 @import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap");
 
 :root {
-  --primary-color: hsl(160, 56%, 72%);
-  --primary-color-darker: hsl(160, 25%, 12%);
+  --primary-color: hsl(0, 13%, 30%);
+  --primary-color-darker: hsl(0, 0%, 0%);
 }
 * {
   box-sizing: border-box;
@@ -62,9 +62,29 @@ form button:hover {
 .inputTarefa {
   height: 40px;
   font-size: 20px;
-  width: 400px;
+  width: 500px;
 }
 
 .btnTarefa {
-  font-size: 15px;
+  font-size: 20px;
+  margin-left: 5%;
+}
+
+.checkBox {
+  width: 20px;
+  height: 20px;
+  margin-left: 2%;
+}
+
+.completed {
+  text-decoration: line-through;
+  opacity: 0;
+  transition: all 0.5s ease-in-out;
+  transform: translateX(-100%);
+}
+
+li {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
 }
