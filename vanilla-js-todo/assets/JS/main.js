@@ -2,36 +2,39 @@ const inputTarefa = document.querySelector(".inputTarefa");
 const btnTarefa = document.querySelector(".btnTarefa");
 const tarefas = document.querySelector(".tarefas");
 
-document.addEventListener("click", function deleteItem(e) {
+document.addEventListener("click", (e) => {
   const el = e.target;
-
   if (el.classList.contains("checkBox")) {
-    el.parentElement.classList.add("completed");
+    const confirmWindow = window.confirm(
+      "Are you sure you want to delete this item from the list?"
+    );
 
-    setTimeout(() => {
-      el.parentElement.remove();
-
-      salvarTarefas();
-    }, 500);
-  }
-  if (el.classList.contains("delete")) {
-    el.parentElement.remove();
-
-    inputTarefa.focus();
-    salvarTarefas();
+    if (confirmWindow === true) {
+      el.parentElement.classList.add("completed");
+      setTimeout(() => {
+        el.parentElement.remove();
+        salvarTarefas();
+        inputTarefa.focus();
+      }, 500);
+    } else {
+      if (confirmWindow === false) {
+        e.preventDefault();
+        inputTarefa.focus();
+        salvarTarefas();
+      }
+    }
   }
 });
 
-function criaTarefa(textInput) {
+function createTask(textInput) {
+  const checkingBox = document.createElement("input");
+  checkingBox.setAttribute("class", "checkBox");
+  checkingBox.setAttribute("type", "checkbox");
+
   const li = document.createElement("li");
 
   li.textContent = textInput;
   tarefas.appendChild(li);
-
-  const checkingBox = document.createElement("input");
-
-  checkingBox.setAttribute("class", "checkBox");
-  checkingBox.setAttribute("type", "checkbox");
 
   li.appendChild(checkingBox);
 
@@ -41,15 +44,17 @@ function criaTarefa(textInput) {
 
 btnTarefa.addEventListener("click", function () {
   if (!inputTarefa.value) return;
-  criaTarefa(inputTarefa.value);
+  createTask(inputTarefa.value);
   salvarTarefas();
+  inputTarefa.focus();
 });
 
 inputTarefa.addEventListener("keypress", function (e) {
   if (e.keyCode === 13) {
     if (!inputTarefa.value) return;
-    criaTarefa(inputTarefa.value);
+    createTask(inputTarefa.value);
     salvarTarefas();
+    inputTarefa.focus();
   }
 });
 
@@ -73,7 +78,7 @@ function loadTarefas() {
   const allTarefas = JSON.parse(tarefas);
 
   for (let tarefa of allTarefas) {
-    criaTarefa(tarefa);
+    createTask(tarefa);
   }
 }
 
